@@ -7,6 +7,8 @@
     <style>
         h1{
             color: rgb(40, 103, 128);
+            font-size: 100;
+            font-size: 3rem
         }
         body{
             text-align: center;
@@ -14,28 +16,42 @@
 
         }
         input{
-            padding: 1px;
-            margin: 10px auto;
+            padding: 4px 6px;
+            margin: 10px 0;
         }
         label{
-            outline-color: black;
-            outline-width: 10px;
-            outline-style: auto;
-            padding: 10px;
-            background-color: greenyellow;
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+            font-weight: bold;
+            margin-right: 10px;
+            padding: 3px;
+            background-color: rgb(180, 217, 209);
+            border: 1px solid #000;
+        }
+        .page-header{
+            border-bottom: 4px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h1 >건드림 로그인</h1>
-    <form action="loginpage.php" method="post">
-        <br>
-        <label for="id" b>아이디: </label>
-        <input type="text" placeholder="아이디" id="id" name="userid"><br>
-        <label for="pw">비밀번호: </label>
-        <input type="password" placeholder="비밀번호" id="pw" name="pass"><br>
-        <input type="submit" value="로그인">
-    </form>
+    <header class="page-header">
+        <h1 >건드림 로그인</h1>
+    </header>
+    <main>
+        <form action="loginpage.php" method="post">
+            <br>
+            <br>
+            <label for="id" b>아이디: </label>
+            <input type="text" placeholder=" 아이디" id="id" name="userid"><br>
+            <label for="pw">비밀번호: </label>
+            <input type="password" placeholder=" 비밀번호" id="pw" name="pass"><br>
+            <input type="submit" value="로그인">
+        </form>
+    </main>
+    
 
 </body>
 </html>
