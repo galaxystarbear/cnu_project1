@@ -7,14 +7,13 @@
     <style>
         h1{
             color: rgb(40, 103, 128);
-            font-size: 100;
-            font-size: 3rem
+            font-size: 80;
+            font-size: 2rem 
         }
         body{
             text-align: left;
-            padding: 10px;
+            padding: 50px;
             overflow-y: scroll;
-
         }
         input{
             padding: 4px 6px;
@@ -35,15 +34,34 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
-        .reserved { background-color: #ffe0e0; }
-        .available { background-color: #f0f0f0; color: #999; }
+        .reserved { 
+            background-color: #ffe0e0;
+            font-size: 2rem;
+        }
+        .available { 
+            background-color: #f0f0f0; 
+            color: #000000ff;
+            font-size: 2rem;
+        }
         #container {
-            max-height: 300px;     /* 원하는 높이로 설정 (예: 300px) */
-            overflow-y: auto;      /* 세로 스크롤만 나오게 */
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 600px;
+            max-height: 400px;     
+            overflow-y: auto;  
             border: 1px solid #ccc;
             margin-top: 10px;
+            text-align: center;
         }
-
+        footer{
+            border-top: 4px solid #333;
+            padding: 10px;
+            margin: 20px;
+        }
+        #scheduleTable {
+            width: 100%;
+            text-align: center;
+        }
     </style>
 </head>
 <body>

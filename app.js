@@ -5,7 +5,7 @@ const scheduleTable = document.getElementById('scheduleTable').querySelector('tb
 
 const reservations = {}; // 시간 → 이름
 
-// 09:00 ~ 18:00, 30분 간격 시간표 생성
+// 00:00 ~ 23:30, 30분 간격 시간표 생성
 const timeSlots = generateTimeSlots("00:00", "23:30", 30);
 renderSchedule();
 
