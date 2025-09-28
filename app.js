@@ -1,17 +1,18 @@
-const form = document.getElementById('reservationForm');
-const timeInput = document.getElementById('time');
-const nameInput = document.getElementById('name');
-const scheduleTable = document.getElementById('scheduleTable').querySelector('tbody');
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('reservationForm');
+  const timeInput = document.getElementById('time');
+  const nameInput = document.getElementById('name');
+  const scheduleTable = document.getElementById('scheduleTable').querySelector('tbody');
 
-const reservations = {}; // 시간 → 이름
+  const reservations = {}; // 시간 → 이름
 
-// 00:00 ~ 23:30, 30분 간격 시간표 생성
-const timeSlots = generateTimeSlots("00:00", "23:30", 30);
-renderSchedule();
+  // 00:00 ~ 23:30, 30분 간격 시간표 생성
+  const timeSlots = generateTimeSlots("00:00", "24:00", 30);
+  renderSchedule();
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
-  const time = timeInput.value;
+  const time = timeInput.value.substring(0,5);
   const name = nameInput.value;
 
   if (!timeSlots.includes(time)) {
@@ -19,7 +20,7 @@ form.addEventListener('submit', function (e) {
     return;
   }
 
-  if (reservations[time]) {
+  if (reservations[time]) { 
     alert("이미 예약된 시간입니다.");
     return;
   }
@@ -35,19 +36,16 @@ function generateTimeSlots(start, end, intervalMinutes) {
   const [eh, em] = end.split(":").map(Number);
 
   while (sh < eh || (sh === eh && sm < em)) {
-    const h = String(sh).padStart(2, '0');
-    const m = String(sm).padStart(2, '0');
-    slots.push(`${h}:${m}`);
-
+    slots.push(`${String(sh).padStart(2, '0')}:${String(sm).padStart(2, '0')}`);
     sm += intervalMinutes;
     if (sm >= 60) {
       sh += 1;
       sm -= 60;
     }
   }
-
   return slots;
 }
+
 
 function renderSchedule() {
   scheduleTable.innerHTML = '';
@@ -71,4 +69,4 @@ function renderSchedule() {
     scheduleTable.appendChild(row);
   });
 }
-
+});

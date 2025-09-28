@@ -7,7 +7,7 @@
     <style>
         h1{
             color: rgb(40, 103, 128);
-            font-size: 80;
+            font-size: 80px;
             font-size: 2rem 
         }
         body{
@@ -79,17 +79,18 @@
                 </tbody>
             </table>
         </div>
-        <script src="app.js"></script>
     </main>
     <footer>
         <h1>예약하기</h1>
             <form id="reservationForm">
                 <label for="time">예약 시간:</label>
-                <input type="time" id="time" required>
+                <input type="time" id="time" step="1800" required>
                 <label for="name">이름:</label>
                 <input type="text" id="name" required>
                 <button type="submit">예약</button>
             </form>
+            <script src="app.js"></script>
     </footer>
+    
 </body>
 </html>
