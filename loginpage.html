@@ -14,7 +14,7 @@
                 name: $('#name').val()
             };
             $ajax({
-                url:  '/loginpage',
+                url:  '/reserve',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(reservationData),
@@ -24,19 +24,17 @@
                     $('h1').text('예약 완료');
                     console.log('예약 성공, 화면 업데이트 완료');
                 },
-                error: function(jqXHR, textStatus, errorThrown){
+                error: function(jqXHR){
                     let errorMessage = '예약 처리 중 오류가 발생했습니다.';
                     try {
                         const errorJson = JSON.parse(jqXHR.responseText);
-                        if (errorJson.message) {
-                            errorMessage = errorJson.message;
-                        }
+                        errorMessage = errorJson.message || errorMessage;
                     } catch (e) {
-                        errorMessage = `예약 실패: 서버 응답 오류 (Status ${jqXHR.status})`;
+                        errorMessage = `예약 실패 (Status ${jqXHR.status}): 해당 시간에 예약이 불가능합니다.`;
                     }
 
                     alert(`🚨 예약 불가! \n${errorMessage}`);
-                    console.error('예약 실패 상세:', jqXHR.status, textStatus, errorThrown);
+                    console.error('예약 실패:', jqXHR.status, status);
                 }
                 
             });
