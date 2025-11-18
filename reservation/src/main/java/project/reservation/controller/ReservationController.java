@@ -2,18 +2,15 @@ package project.reservation.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ReservationController {
 
-    @PostMapping("/loginpage")
-    public String loginpage(UserDto userDto, Model model) {
+    @PostMapping("/main")
+    public String mainPage(UserDto userDto, Model model) {
         model.addAttribute("userid", userDto.userid);
-        return "loginpage";
+        return "main";
     }
 
 
@@ -37,4 +34,6 @@ public class ReservationController {
             this.pass = pass;
         }
     }
+
 }
+
