@@ -10,8 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeSlots = generateTimeSlots("00:00", "24:00", 30);
   renderSchedule();
 
+//submit을 제출한 경우
 form.addEventListener('submit', function (e) {
-  e.preventDefault();
+  e.preventDefault();//submit의 특징인 새로고침 막기
+
+  //받은 time, name 쓰기 쉬운 상태로 바꾸기
   const time = timeInput.value.substring(0,5);
   const name = nameInput.value;
 
@@ -25,22 +28,22 @@ form.addEventListener('submit', function (e) {
     return;
   }
 
-  reservations[time] = name;
-  renderSchedule();
+  reservations[time] = name; //resrvations에 추가
+  renderSchedule(); // 추가한 기반으로 다시 테이블 생성
   form.reset();
 });
 
 function generateTimeSlots(start, end, intervalMinutes) {
   const slots = [];
-  let [sh, sm] = start.split(":").map(Number);
-  const [eh, em] = end.split(":").map(Number);
+  let [start_hour, start_minute] = start.split(":").map(Number);
+  const [end_hour, end_minute] = end.split(":").map(Number);
 
-  while (sh < eh || (sh === eh && sm < em)) {
-    slots.push(`${String(sh).padStart(2, '0')}:${String(sm).padStart(2, '0')}`);
-    sm += intervalMinutes;
-    if (sm >= 60) {
-      sh += 1;
-      sm -= 60;
+  while (start_hour < end_hour || (start_hour === end_hour && start_minute < end_minute)) {
+    slots.push(`${String(start_hour).padStart(2, '0')}:${String(start_minute).padStart(2, '0')}`);
+    start_minute += intervalMinutes;
+    if (start_minute >= 60) {
+      start_hour += 1;
+      start_minute -= 60;
     }
   }
   return slots;
@@ -49,6 +52,7 @@ function generateTimeSlots(start, end, intervalMinutes) {
 
 function renderSchedule() {
   scheduleTable.innerHTML = '';
+  //timeslots에 있는 것을 각각 time에 넣어서 확인 후 테이블에 한 row씩 추가
   timeSlots.forEach(time => {
     const row = document.createElement('tr');
     const timeCell = document.createElement('td');
@@ -56,17 +60,18 @@ function renderSchedule() {
 
     timeCell.textContent = time;
 
-    if (reservations[time]) {
-      statusCell.textContent = reservations[time]; // 예약자 이름만 표시
-      row.classList.add('reserved');
+    if (reservations[time]) { //예약 확인
+      statusCell.textContent = reservations[time]; // 예약자 이름 넣기
+      row.classList.add('reserved'); //css에 있는 reserved라는 클래스 추가
     } else {
       statusCell.textContent = '(비어 있음)'; // 예약되지 않은 상태
-      row.classList.add('available');
+      row.classList.add('available'); //css에 있는 available라는 클래스 추가
     }
 
-    row.appendChild(timeCell);
+    row.appendChild(timeCell); //row에 넣기
     row.appendChild(statusCell);
-    scheduleTable.appendChild(row);
+    scheduleTable.appendChild(row); //보여지는 실제 테이블에 만든 row 넣기
   });
 }
+
 });
