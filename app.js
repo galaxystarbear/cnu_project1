@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeSlots = generateTimeSlots("00:00", "24:00", 30);
   renderSchedule();
 
-//submit을 제출한 경우
+///////////////////////////////////////////////////////////////////
+//데이터 베이스에서 받아서 reservation 초기화하고 넣기
+//submit을 제출한 경우 
 form.addEventListener('submit', function (e) {
   e.preventDefault();//submit의 특징인 새로고침 막기
 
@@ -32,14 +34,16 @@ form.addEventListener('submit', function (e) {
   renderSchedule(); // 추가한 기반으로 다시 테이블 생성
   form.reset();
 });
-
+//////////////////////////////////////////////////////////////////////////////////
 function generateTimeSlots(start, end, intervalMinutes) {
   const slots = [];
   let [start_hour, start_minute] = start.split(":").map(Number);
   const [end_hour, end_minute] = end.split(":").map(Number);
 
   while (start_hour < end_hour || (start_hour === end_hour && start_minute < end_minute)) {
-    slots.push(`${String(start_hour).padStart(2, '0')}:${String(start_minute).padStart(2, '0')}`);
+    // 문자열로 만들어서 slot에 추가
+    slots.push(`${String(start_hour).padStart(2, '0')}:${String(start_minute).padStart(2, '0')}`);// padStart: 2자리로 바꾸기 9->09
+
     start_minute += intervalMinutes;
     if (start_minute >= 60) {
       start_hour += 1;
