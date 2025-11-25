@@ -4,15 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const nameInput = document.getElementById('name');
   const scheduleTable = document.getElementById('scheduleTable').querySelector('tbody');
 
-  const reservations = {}; // 시간 → 이름
+  reservations = {}; // 시간 → 이름
 
   // 00:00 ~ 23:30, 30분 간격 시간표 생성
   const timeSlots = generateTimeSlots("00:00", "24:00", 30);
   renderSchedule();
 
+//submit을 제출한 경우 
 ///////////////////////////////////////////////////////////////////
 //데이터 베이스에서 받아서 reservation 초기화하고 넣기
-//submit을 제출한 경우 
 form.addEventListener('submit', function (e) {
   e.preventDefault();//submit의 특징인 새로고침 막기
 
@@ -29,8 +29,15 @@ form.addEventListener('submit', function (e) {
     alert("이미 예약된 시간입니다.");
     return;
   }
-
-  reservations[time] = name; //resrvations에 추가
+  reservations={};
+  //resrvations에 추가
+  fetch("http://localhost:8080/api/items")
+    .then(res=> res.json())
+    .then(data=>{
+      data.forEach(item => {
+        reservations[item.time]=item.name;
+      })
+    })
   renderSchedule(); // 추가한 기반으로 다시 테이블 생성
   form.reset();
 });
