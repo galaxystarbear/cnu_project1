@@ -26,7 +26,11 @@
         <h1>예약하기</h1>
             <form id="reservationForm" action="" method="post">
                 <label for="time">예약 시간:</label>
-                <input type="time" id="time" step="1800" required>
+                <div id="timeSelectionContainer">
+                    <div id="hourButtons"></div>
+                    <div id="minuteButtons"></div>
+                    <div id="displayTime">선택된 시간: --:--</div>
+                </div>
                 <label for="name">이름:</label>
                 <input type="text" id="name" required>
                 <button type="submit">예약</button>

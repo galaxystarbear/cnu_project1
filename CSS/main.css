@@ -55,3 +55,35 @@ footer{
     width: 100%;
     text-align: center;
 }
+#timeSelectionContainer {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+#hourButtons, #minuteButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+.time-button {
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+.time-button.selected {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-color: #0056b3;
+}
+#displayTime {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}

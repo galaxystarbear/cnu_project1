@@ -3,13 +3,63 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeInput = document.getElementById('time');
   const nameInput = document.getElementById('name');
   const scheduleTable = document.getElementById('scheduleTable').querySelector('tbody');
-
+  const hourButtonsContainer = document.getElementById('hourButtons');
+  const minuteButtonsContainer = document.getElementById('minuteButtons');
+  const displayTime = document.getElementById('displayTime');
+  let selectedHour = null;
+  let selectedMinute = null;
   reservations = {}; // 시간 → 이름
+
+  function updateTimeInput() {
+        if (selectedHour && selectedMinute) {
+            const timeString = `${selectedHour}:${selectedMinute}`;
+            displayTime.textContent = `선택된 시간: ${timeString}`;
+            timeInput.value = timeString; // ⭐️ 핵심: timeInput에 선택된 값 주입
+            timeInput.setCustomValidity(''); // 유효성 검사 통과
+        } else {
+            displayTime.textContent = '선택된 시간: --:--';
+            timeInput.value = ''; // 시/분 중 하나라도 미선택 시 값 비우기
+            // HTML input의 required 속성이 작동하도록 유효성 오류 설정
+            timeInput.setCustomValidity('예약 시간(시, 분)을 모두 선택해 주세요.'); 
+        }
+    }
+    timeInput.setCustomValidity('예약 시간(시, 분)을 모두 선택해 주세요.');
+    for (let h = 1; h <= 24; h++) {
+        const button = document.createElement('button');
+        button.type = 'button'; // 폼 제출 방지
+        button.textContent = `${h}시`;
+        button.dataset.hour = h.toString().padStart(2, '0'); // '01', '02', ...
+        button.classList.add('time-button', 'hour-button');
+        
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.hour-button.selected').forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected'); 
+            selectedHour = this.dataset.hour;
+            updateTimeInput();
+        });
+        hourButtonsContainer.appendChild(button);
+    }
+
+    ['00', '30'].forEach(minute => {
+        const button = document.createElement('button');
+        button.type = 'button'; // 폼 제출 방지
+        button.textContent = `${minute}분`;
+        button.dataset.minute = minute;
+        button.classList.add('time-button', 'minute-button');
+        
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.minute-button.selected').forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected'); 
+            selectedMinute = this.dataset.minute;
+            updateTimeInput();
+        });
+        minuteButtonsContainer.appendChild(button);
+    });
+    reservations = {};
 
   // 00:00 ~ 23:30, 30분 간격 시간표 생성
   const timeSlots = generateTimeSlots("00:00", "24:00", 30);
   renderSchedule();
-
 //submit을 제출한 경우 
 ///////////////////////////////////////////////////////////////////
 //데이터 베이스에서 받아서 reservation 초기화하고 넣기
@@ -40,6 +90,10 @@ form.addEventListener('submit', function (e) {
     })
   renderSchedule(); // 추가한 기반으로 다시 테이블 생성
   form.reset();
+  selectedHour = null;
+  selectedMinute = null;
+  document.querySelectorAll('.time-button.selected').forEach(btn => btn.classList.remove('selected'));
+  updateTimeInput();
 });
 //////////////////////////////////////////////////////////////////////////////////
 function generateTimeSlots(start, end, intervalMinutes) {
