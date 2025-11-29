@@ -56,18 +56,21 @@ footer{
     text-align: center;
 }
 #timeSelectionContainer {
+    width: 50%;
+    margin-top: 10px;
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 #hourButtons, #minuteButtons {
-    display: flex;
+    display: flex; 
     flex-wrap: wrap;
     gap: 5px;
     margin-bottom: 10px;
 }
 .time-button {
+    margin: 5px;
     padding: 8px 12px;
     border: 1px solid #007bff;
     background-color: #fff;
@@ -86,4 +89,17 @@ footer{
     margin-top: 10px;
     font-weight: bold;
     color: #333;
+}
+.hidden {
+    display: none !important;
+}
+#toggleHourButton, #toggleMinuteButton {
+    padding: 8px 12px;
+    border: 1px solid #1DA2BD; /* 다른 요소와 구별되는 색상 */
+    background-color: #fff;
+    color: #1DA2BD;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+    margin-right: 5px;
 }

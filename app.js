@@ -3,27 +3,68 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeInput = document.getElementById('time');
   const nameInput = document.getElementById('name');
   const scheduleTable = document.getElementById('scheduleTable').querySelector('tbody');
+
+  const toggleHourButton = document.getElementById('toggleHourButton');
+  const toggleMinuteButton = document.getElementById('toggleMinuteButton');
+
   const hourButtonsContainer = document.getElementById('hourButtons');
   const minuteButtonsContainer = document.getElementById('minuteButtons');
   const displayTime = document.getElementById('displayTime');
   let selectedHour = null;
   let selectedMinute = null;
-  reservations = {}; // 시간 → 이름
+  let reservations = {}; // 시간 → 이름
+
+  const timeSlots = generateTimeSlots("00:00", "24:00", 30);
+
+  function toggleButtonGroups(groupToShow) {
+        if (groupToShow === 'hour') {
+            hourButtonsContainer.classList.remove('hidden');
+            minuteButtonsContainer.classList.add('hidden');
+        } else if (groupToShow === 'minute') {
+            hourButtonsContainer.classList.add('hidden');
+            minuteButtonsContainer.classList.remove('hidden');
+        } else {
+            hourButtonsContainer.classList.add('hidden');
+            minuteButtonsContainer.classList.add('hidden');
+        }
+    }
+  toggleButtonGroups(null);
 
   function updateTimeInput() {
+        toggleMinuteButton.disabled = false;
+        const displayHour = selectedHour ? selectedHour : '--';
+        const displayMinute = selectedMinute ? selectedMinute : '--';
+        const displayTimeString = `${displayHour}:${displayMinute}`;
+
+        displayTime.textContent = `선택된 시간: ${displayTimeString}`;
+
         if (selectedHour && selectedMinute) {
-            const timeString = `${selectedHour}:${selectedMinute}`;
-            displayTime.textContent = `선택된 시간: ${timeString}`;
-            timeInput.value = timeString; // ⭐️ 핵심: timeInput에 선택된 값 주입
-            timeInput.setCustomValidity(''); // 유효성 검사 통과
+            timeInput.value = `${selectedHour}:${selectedMinute}`; 
+            timeInput.setCustomValidity('');
         } else {
-            displayTime.textContent = '선택된 시간: --:--';
-            timeInput.value = ''; // 시/분 중 하나라도 미선택 시 값 비우기
-            // HTML input의 required 속성이 작동하도록 유효성 오류 설정
-            timeInput.setCustomValidity('예약 시간(시, 분)을 모두 선택해 주세요.'); 
+            timeInput.value = ''; 
+            timeInput.setCustomValidity('예약 시간(시, 분)을 모두 선택해 주세요.');
         }
     }
     timeInput.setCustomValidity('예약 시간(시, 분)을 모두 선택해 주세요.');
+    updateTimeInput();
+
+    toggleHourButton.addEventListener('click', function() {
+        if (!hourButtonsContainer.classList.contains('hidden')) {
+            toggleButtonGroups(null); 
+        } else {
+            toggleButtonGroups('hour'); 
+        }
+    });
+
+    toggleMinuteButton.addEventListener('click', function() {
+        if (!minuteButtonsContainer.classList.contains('hidden')) {
+            toggleButtonGroups(null); 
+        } else {
+            toggleButtonGroups('minute');
+        }
+    });
+
     for (let h = 1; h <= 24; h++) {
         const button = document.createElement('button');
         button.type = 'button'; // 폼 제출 방지
@@ -57,8 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     reservations = {};
 
-  // 00:00 ~ 23:30, 30분 간격 시간표 생성
-  const timeSlots = generateTimeSlots("00:00", "24:00", 30);
+  // 00:00 ~ 23:30, 30분 간격 시간표 생성 
   renderSchedule();
 //submit을 제출한 경우 
 ///////////////////////////////////////////////////////////////////
