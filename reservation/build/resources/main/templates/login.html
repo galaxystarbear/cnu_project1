@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>건드림 피아노 예약</title>
+
+    <link rel="stylesheet" th:href="@{/CSS/cssfile.css}">
+</head>
+<body>
+<header class="page-header">
+    <h1 >건드림 로그인</h1>
+</header>
+<main>
+    <form action="/main" method="post">
+        <br>
+        <br>
+        <label for="id" >아이디: </label>
+        <input type="text" placeholder=" 아이디" id="id" name="userid" required><br>
+        <label for="pw">비밀번호: </label>
+        <input type="password" placeholder=" 비밀번호" id="pw" name="pass" required><br>
+        <button name="로그인">로그인</button>
+    </form>
+</main>
+
+
+</body>
+</html>

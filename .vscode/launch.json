@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "ReservationApplication",
+            "request": "launch",
+            "mainClass": "project.reservation.ReservationApplication",
+            "projectName": "reservation"
+        },
+        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
