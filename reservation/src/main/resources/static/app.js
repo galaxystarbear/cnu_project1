@@ -15,6 +15,35 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedMinute = null;
     let reservations = {}; // 시간 → 이름
     const timeSlots = generateTimeSlots("00:00", "24:00", 30);
+    renderSchedule();
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();//submit의 특징인 새로고침 막기
+
+        //받은 time, name 쓰기 쉬운 상태로 바꾸기
+        const time = timeInput.value.substring(0,5);
+        const name = nameInput.value;
+
+        if (!timeSlots.includes(time)) {
+            alert("예약 가능한 시간이 아닙니다.");
+            return;
+        }
+
+        if (reservations[time]) { 
+            alert("이미 예약된 시간입니다.");
+            return;
+        }
+        reservations={};
+        //resrvations에 추가
+        fetch("http://localhost:8080/api/items")
+            .then(res=> res.json())
+            .then(data=>{
+            data.forEach(item => {
+                reservations[item.time]=item.name;
+            })
+            })
+        renderSchedule(); // 추가한 기반으로 다시 테이블 생성
+        form.reset();
+    });
 
     function generateTimeSlots(start, end, intervalMinutes) {
         const slots = [];
