@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +66,7 @@
 </head>
 <body>
     <header class="page-header">
-        <h1 th:text="${userid} + '님'"></h1>
+        <h1 th:text="${userid}+ '님' + ${time}"></h1>
     </header>
     <main>
         <div id="container">
@@ -82,14 +82,14 @@
     </main>
     <footer>
         <h1>예약하기</h1>
-            <form id="reservationForm">
+            <form id="reservationForm" action="/kimmjBabo" method="post">
                 <label for="time">예약 시간:</label>
-                <input type="time" id="time" step="1800" required>
+                <input type="time" id="time" name="time" step="1800" required>
                 <label for="name">이름:</label>
-                <input type="text" id="name" required>
+                <input type="text" id="name" name="name" required>
                 <button type="submit">예약</button>
             </form>
-            <script src="app.js"></script>
+            <script src="/app.js"></script>
     </footer>
     
 </body>

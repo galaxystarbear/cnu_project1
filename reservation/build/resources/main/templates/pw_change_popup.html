@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 변경</title>
+    <style>
+        input{
+            padding:auto;
+        }
+        body{
+            font-family: sans-serif;
+            background-color: #f0f4f8; /* bg-gradient-background 대신 단색 */
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-card */
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .card-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-description {
+            color: #6b7280; /* text-muted-foreground */
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.625rem 2.5rem 0.625rem 2.5rem; /* pl-10 pr-10 */
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">새 비밀번호를 변경하세요</div>
+        </div>
+        <p>
+            <label for="old_pw" >현재 비밀번호:</label>
+            <input type="password" class="input-field" id="old_pw" placeholder=" 현재 비밀번호" required><br>
+        </p>
+        <p>
+            <label for="new_pw">새 비밀번호:</label>
+            <input type="password" class="input-field" id="new_pw" placeholder=" 새 비밀번호" required><br>
+        </p>
+        <p>
+            <label for="new_pw">새 비밀번호 확인:</label>
+            <input type="password" class="input-field" id="check_pw" placeholder=" 새 비밀번호 확인" required><br>
+        </p>
+        <button name="change_pw">비밀번호 변경하기</button>
+    </div>
+
+    
+</body>
+</html>
