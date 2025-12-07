@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface TimeRepository {
     Time save(Time time);
-    Optional<Time> findByTime(Long startTime);
-    Optional<Time> findByName(String name);
+    Optional<Time> findByTime(String time);
     List<Time> findAll();
 }

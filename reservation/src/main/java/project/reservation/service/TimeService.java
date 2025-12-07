@@ -1,5 +1,6 @@
 package project.reservation.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.reservation.domain.Time;
 import project.reservation.repository.TimeRepository;
 
@@ -8,23 +9,18 @@ import java.util.List;
 public class TimeService {
     private final TimeRepository timeRepository;
 
+    @Autowired
     public TimeService(TimeRepository timeRepository){
         this.timeRepository = timeRepository;
     }
 
-    public boolean enroll(Time time) {
-        validateReservationTime(time);
-        timeRepository.save(time);
-        return true;
-    }
-
-    private void validateReservationTime(Time time) {
-        timeRepository.findByTime(time.getStartTime() - 30)
+    public String enroll(Time time) {
+        timeRepository.findByTime(time.getTime())
                 .ifPresent(m -> {
-                    if (m.getName().equals(time.getName())) {
-                        throw new IllegalStateException("연속으로 예약할 수 없습니다.");
-                    }
+                    throw new IllegalStateException("예약이 불가능한 시간입니다.");
                 });
+        timeRepository.save(time);
+        return time.getTime();
     }
 
     public List<Time> findTimes() {

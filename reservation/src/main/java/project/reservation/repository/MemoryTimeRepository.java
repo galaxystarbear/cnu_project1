@@ -1,33 +1,35 @@
 package project.reservation.repository;
 
+
+import jakarta.persistence.EntityManager;
 import project.reservation.domain.Time;
 
 import java.util.*;
 
 public class MemoryTimeRepository implements TimeRepository {
-    private static Map<Long, Time> store = new HashMap<>();
-    private static long sequence = 0L;
+    private final EntityManager em;
+
+    public MemoryTimeRepository(EntityManager em) {
+        this.em = em;
+    }
+
 
     @Override
     public Time save(Time time) {
-
+        em.persist(time);
         return time;
     }
 
     @Override
-    public Optional<Time> findByTime(Long startTime) {
-        return Optional.ofNullable(store.get(startTime));
+    public Optional<Time> findByTime(String time) {
+        Time time1 = em.find(Time.class, time);
+        return Optional.ofNullable(time1);
     }
 
-    @Override
-    public Optional<Time> findByName(String name) {
-        return store.values().stream()
-                .filter(time -> time.getName().equals(name))
-                .findAny();
-    }
 
     @Override
     public List<Time> findAll() {
-        return new ArrayList<>(store.values());
+        return em.createQuery("select t form Time t", Time.class)
+                .getResultList();
     }
 }
