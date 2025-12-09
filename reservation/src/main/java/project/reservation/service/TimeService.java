@@ -1,7 +1,7 @@
 package project.reservation.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import project.reservation.domain.Time;
+import project.reservation.domain.ReservationTime;
 import project.reservation.repository.TimeRepository;
 
 import java.util.List;
@@ -14,16 +14,16 @@ public class TimeService {
         this.timeRepository = timeRepository;
     }
 
-    public String enroll(Time time) {
-        timeRepository.findByTime(time.getTime())
+    public String enroll(ReservationTime reservationTime) {
+        timeRepository.findByTime(reservationTime.getTime())
                 .ifPresent(m -> {
                     throw new IllegalStateException("예약이 불가능한 시간입니다.");
                 });
-        timeRepository.save(time);
-        return time.getTime();
+        timeRepository.save(reservationTime);
+        return reservationTime.getTime();
     }
 
-    public List<Time> findTimes() {
+    public List<ReservationTime> findTimes() {
         return timeRepository.findAll();
     }
 

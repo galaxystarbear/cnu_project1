@@ -2,8 +2,9 @@ package project.reservation.repository;
 
 
 import jakarta.persistence.EntityManager;
-import project.reservation.domain.Time;
+import project.reservation.domain.ReservationTime;
 
+import java.sql.Time;
 import java.util.*;
 
 public class MemoryTimeRepository implements TimeRepository {
@@ -15,21 +16,24 @@ public class MemoryTimeRepository implements TimeRepository {
 
 
     @Override
-    public Time save(Time time) {
-        em.persist(time);
-        return time;
+    public ReservationTime save(ReservationTime reservationTime) {
+        em.persist(reservationTime);
+        return reservationTime;
     }
 
     @Override
-    public Optional<Time> findByTime(String time) {
-        Time time1 = em.find(Time.class, time);
-        return Optional.ofNullable(time1);
+    public Optional<ReservationTime> findByTime(String time) {
+        List<ReservationTime> result = em.createQuery("select rt from ReservationTime rt where rt.time = :time", ReservationTime.class)
+                .setParameter("time", time)
+                .getResultList();
+
+        return result.stream().findAny();
     }
 
 
     @Override
-    public List<Time> findAll() {
-        return em.createQuery("select t form Time t", Time.class)
+    public List<ReservationTime> findAll() {
+        return em.createQuery("select rt from ReservationTime rt", ReservationTime.class)
                 .getResultList();
     }
 }

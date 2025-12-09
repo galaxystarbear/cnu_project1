@@ -4,9 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
-import project.reservation.domain.Time;
+import project.reservation.domain.ReservationTime;
 import project.reservation.repository.TimeRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -14,13 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
-@TestPropertySource(properties = {
-        "spring.datasource.url=jdbc:jdbc:postgresql://db.dqrdgsdmiduieegxujor.supabase.co:5432/postgres",
-        "spring.datasource.username=postgres",
-        "spring.datasource.password=minjunlove",
-        "spring.datasource.driver-class-name=org.postgresql.Driver",
-        "spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect"
-})
 public class TimeServiceTest {
 
     @Autowired TimeService timeService;
@@ -28,25 +20,28 @@ public class TimeServiceTest {
     TimeRepository timeRepository;
 
     @Test
-    @Commit
     void 예약() {
-        Time time = new Time();
-        time.setTime("17:30");
+        ReservationTime reservationTime = new ReservationTime();
+        reservationTime.setDate("2025-12-08");
+        reservationTime.setTime("17:40");
 
-        String saveTime = timeService.enroll(time);
+        String saveTime = timeService.enroll(reservationTime);
 
+        System.out.println(saveTime);
     }
 
     @Test
     public void 중복예약() {
-        Time time1 = new Time();
-        time1.setTime("16:00");
+        ReservationTime reservationTime1 = new ReservationTime();
+        reservationTime1.setDate("2025-12-08");
+        reservationTime1.setTime("16:00");
 
-        Time time2 = new Time();
-        time2.setTime("16:00");
+        ReservationTime reservationTime2 = new ReservationTime();
+        reservationTime2.setDate("2025-12-08");
+        reservationTime2.setTime("16:00");
 
-        timeService.enroll(time1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> timeService.enroll(time2));
+        timeService.enroll(reservationTime1);
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> timeService.enroll(reservationTime2));
 
         assertThat(e.getMessage()).isEqualTo("예약이 불가능한 시간입니다.");
     }
