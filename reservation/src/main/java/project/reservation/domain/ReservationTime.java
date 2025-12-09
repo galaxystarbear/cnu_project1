@@ -1,13 +1,21 @@
 package project.reservation.domain;
 
-public class Time {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class ReservationTime {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String date;
     private String time;
 
-    public Time(){}
+    public ReservationTime(){}
 
-    public Time(String date, String time) {
+    public ReservationTime(String date, String time) {
         this.date = date;
         this.time = time;
     }

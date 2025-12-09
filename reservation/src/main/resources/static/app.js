@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hourButtonsContainer = document.getElementById('hourButtons');
     const minuteButtonsContainer = document.getElementById('minuteButtons');
     const displayTime = document.getElementById('displayTime');
-    
+
     let selectedHour = null;
     let selectedMinute = null;
     let reservations = {}; // 시간 → 이름
@@ -28,19 +28,20 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (reservations[time]) { 
+        if (reservations[time]) {
             alert("이미 예약된 시간입니다.");
             return;
         }
-        reservations={};
-        //resrvations에 추가
-        fetch("http://localhost:8080/api/items")
-            .then(res=> res.json())
-            .then(data=>{
-            data.forEach(item => {
-                reservations[item.time]=item.name;
-            })
-            })
+        // reservations={};
+        // //resrvations에 추가
+        // fetch("http://localhost:8080/api/items")
+        //     .then(res=> res.json())
+        //     .then(data=>{
+        //     data.forEach(item => {
+        //         reservations[item.time]=item.name;
+        //     })
+        //     })
+        reservations[time]=name
         renderSchedule(); // 추가한 기반으로 다시 테이블 생성
         form.reset();
     });
@@ -85,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initializeUIAndListeners() {
-        
+
         function toggleButtonGroups(groupToShow) {
             if (groupToShow === 'hour') {
                 hourButtonsContainer.classList.remove('hidden');
@@ -98,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 minuteButtonsContainer.classList.add('hidden');
             }
         }
-        
+
         function updateTimeInput() {
             toggleMinuteButton.disabled = false;
             const displayHour = selectedHour ? selectedHour : '--';
@@ -108,10 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
             displayTime.textContent = `선택된 시간: ${displayTimeString}`;
 
             if (selectedHour && selectedMinute) {
-                timeInput.value = `${selectedHour}:${selectedMinute}`; 
+                timeInput.value = `${selectedHour}:${selectedMinute}`;
                 timeInput.setCustomValidity(''); // 유효성 통과
             } else {
-                timeInput.value = ''; 
+                timeInput.value = '';
                 timeInput.setCustomValidity('예약 시간(시, 분)을 모두 선택해 주세요.'); // 유효성 실패
             }
         }
@@ -119,18 +120,18 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleButtonGroups(null);
         timeInput.setCustomValidity('예약 시간(시, 분)을 모두 선택해 주세요.');
         updateTimeInput();
-        
+
         toggleHourButton.addEventListener('click', function() {
             if (!hourButtonsContainer.classList.contains('hidden')) {
-                toggleButtonGroups(null); 
+                toggleButtonGroups(null);
             } else {
-                toggleButtonGroups('hour'); 
+                toggleButtonGroups('hour');
             }
         });
 
         toggleMinuteButton.addEventListener('click', function() {
             if (!minuteButtonsContainer.classList.contains('hidden')) {
-                toggleButtonGroups(null); 
+                toggleButtonGroups(null);
             } else {
                 toggleButtonGroups('minute');
             }
@@ -142,10 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
             button.textContent = `${h}시`;
             button.dataset.hour = h.toString().padStart(2, '0');
             button.classList.add('time-button', 'hour-button');
-            
+
             button.addEventListener('click', function() {
                 document.querySelectorAll('.hour-button.selected').forEach(btn => btn.classList.remove('selected'));
-                this.classList.add('selected'); 
+                this.classList.add('selected');
                 selectedHour = this.dataset.hour;
                 updateTimeInput();
             });
@@ -158,54 +159,54 @@ document.addEventListener("DOMContentLoaded", () => {
             button.textContent = `${minute}분`;
             button.dataset.minute = minute;
             button.classList.add('time-button', 'minute-button');
-            
+
             button.addEventListener('click', function() {
                 document.querySelectorAll('.minute-button.selected').forEach(btn => btn.classList.remove('selected'));
-                this.classList.add('selected'); 
+                this.classList.add('selected');
                 selectedMinute = this.dataset.minute;
                 updateTimeInput();
             });
             minuteButtonsContainer.appendChild(button);
         });
-        
+
         return { updateTimeInput };
     }
 
-    function setupReservationDataAndSubmit() {
-        
-        reservations = {};
-        renderSchedule();
+    // function setupReservationDataAndSubmit() {
 
-        // submit을 제출한 경우 (리다이렉트/페이지 제출을 위해 e.preventDefault()는 실패 시에만 사용)
-        form.addEventListener('submit', function (e) {
-            
-            // 받은 time 쓰기 쉬운 상태로 바꾸기
-            const time = timeInput.value.substring(0, 5);
+    //     reservations = {};
+    //     renderSchedule();
 
-            if (!form.checkValidity()) {
-                 // timeInput에 설정된 CustomValidity를 통해 시간 선택 여부 확인
-                 e.preventDefault(); 
-                 alert("예약 시간(시, 분)을 모두 선택/입력해 주세요.");
-                 return;
-            }
+    //     // submit을 제출한 경우 (리다이렉트/페이지 제출을 위해 e.preventDefault()는 실패 시에만 사용)
+    //     form.addEventListener('submit', function (e) {
 
-            if (!timeSlots.includes(time)) {
-                e.preventDefault();
-                alert("예약 가능한 시간이 아닙니다.");
-                return;
-            }
+    //         // 받은 time 쓰기 쉬운 상태로 바꾸기
+    //         const time = timeInput.value.substring(0, 5);
 
-            if (reservations[time]) { 
-                e.preventDefault();
-                alert("이미 예약된 시간입니다.");
-                return;
-            }
-            
-            // 폼 제출 허용 (e.preventDefault()를 호출하지 않음)
-            // 서버는 이제 POST 요청을 받고, 예약 처리 후 리다이렉트를 수행해야 합니다.
-        });
-    }
-    
+    //         if (!form.checkValidity()) {
+    //              // timeInput에 설정된 CustomValidity를 통해 시간 선택 여부 확인
+    //              e.preventDefault();
+    //              alert("예약 시간(시, 분)을 모두 선택/입력해 주세요.");
+    //              return;
+    //         }
+
+    //         if (!timeSlots.includes(time)) {
+    //             e.preventDefault();
+    //             alert("예약 가능한 시간이 아닙니다.");
+    //             return;
+    //         }
+
+    //         if (reservations[time]) {
+    //             e.preventDefault();
+    //             alert("이미 예약된 시간입니다.");
+    //             return;
+    //         }
+
+    //         // 폼 제출 허용 (e.preventDefault()를 호출하지 않음)
+    //         // 서버는 이제 POST 요청을 받고, 예약 처리 후 리다이렉트를 수행해야 합니다.
+    //     });
+    // }
+
     initializeUIAndListeners();
     setupReservationDataAndSubmit();
 });
