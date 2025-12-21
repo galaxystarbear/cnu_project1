@@ -4,7 +4,6 @@ package project.reservation.repository;
 import jakarta.persistence.EntityManager;
 import project.reservation.domain.ReservationTime;
 
-import java.sql.Time;
 import java.util.*;
 
 public class MemoryTimeRepository implements TimeRepository {

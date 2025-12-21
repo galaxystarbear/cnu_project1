@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import project.reservation.domain.NewUserDto;
 import project.reservation.domain.ReservationTime;
 import project.reservation.domain.UserDto;
+import project.reservation.service.MemberService;
 import project.reservation.service.TimeService;
 
 import java.util.List;
@@ -13,16 +15,27 @@ import java.util.List;
 @Controller
 public class ReservationController {
     public final TimeService timeService;
+    public final MemberService memberService;
 
     @Autowired
-    public ReservationController(TimeService timeService) {
+    public ReservationController(TimeService timeService, MemberService memberService) {
         this.timeService = timeService;
+        this.memberService = memberService;
     }
 
     @PostMapping("/main")
     public String mainPage(UserDto userDto, Model model) {
-        model.addAttribute("userid", userDto.getUserid());
-        return "main";
+        if (memberService.login(userDto.getUserid(), userDto.getPass())){
+            model.addAttribute("userid", userDto.getUserid());
+            return "main";
+        }
+        return "login";
+    }
+    
+    @GetMapping("/change")
+    public String passChange(NewUserDto newUserDto) {
+        memberService.changePassword(newUserDto.getUserid(), newUserDto.getPass(), newUserDto.getNewPass());
+        return "login";
     }
 
 }

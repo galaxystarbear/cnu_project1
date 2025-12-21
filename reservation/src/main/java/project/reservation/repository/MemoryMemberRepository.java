@@ -1,10 +1,17 @@
 package project.reservation.repository;
 
+import jakarta.persistence.EntityManager;
 import project.reservation.domain.*;
 
 import java.util.*;
 
 public class MemoryMemberRepository implements MemberRepository{
+    private final EntityManager em;
+    
+    public MemoryMemberRepository(EntityManager em) {
+        this.em = em;
+    }
+    
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
 

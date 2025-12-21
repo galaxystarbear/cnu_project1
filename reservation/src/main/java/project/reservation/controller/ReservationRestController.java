@@ -38,4 +38,5 @@ public class ReservationRestController{
         List<ReservationTime> timeList = timeService.findTimes();
         return timeList;
     }
+    
 }
