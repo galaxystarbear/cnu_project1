@@ -4,6 +4,7 @@ public class Member {
 
     private long id;
     private String name;
+    private String encodedPass;
 
     public long getId() {
         return id;
@@ -19,5 +20,13 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getEncodedPass() {
+        return encodedPass;
+    }
+    
+    public void setEncodedPass(String encodedPass) {
+        this.encodedPass = encodedPass;
     }
 }
