@@ -22,12 +22,20 @@ public class MemoryTimeRepository implements TimeRepository {
     }
 
     @Override
-    public Optional<ReservationTime> findByTime(String time) {
-        List<ReservationTime> result = em.createQuery("select rt from ReservationTime rt where rt.time = :time", ReservationTime.class)
+    public Optional<ReservationTime> findByTime(String date, String time) {
+        List<ReservationTime> result = em.createQuery("select rt from ReservationTime rt where rt.time = :time and rt.date = :date", ReservationTime.class)
+                .setParameter("date", date)
                 .setParameter("time", time)
                 .getResultList();
 
         return result.stream().findAny();
+    }
+    
+    @Override
+    public List<ReservationTime> findByDate(String date) {
+        return em.createQuery("select rt from ReservationTime rt where rt.date = :date", ReservationTime.class)
+                .setParameter("date", date)
+                .getResultList();
     }
 
 

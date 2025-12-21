@@ -25,10 +25,5 @@ public class ReservationController {
         return "main";
     }
 
-    @GetMapping("/booking")
-    public List<ReservationTime> getReservation() {
-        List<ReservationTime> timeList = timeService.findTimes();
-        return timeList;
-    }
 }
 
