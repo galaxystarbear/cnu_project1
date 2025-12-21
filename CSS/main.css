@@ -1,105 +1,262 @@
-h1{
-    color: rgb(40, 103, 128);
-    font-size: 80px;
-    font-size: 2rem 
-}
+/* =========================
+   main.css (정리본)
+========================= */
+
+/* ---- Base ---- */
+* { box-sizing: border-box; }
+
 body{
-    text-align: left;
-    padding: 50px;
-    overflow-y: scroll;
+  text-align: left;
+  padding: 28px 16px;
+  overflow-y: scroll;
+  max-width: 980px;
+  margin: 0 auto;
+  background: #f4f7f9;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+  line-height: 1.5;
 }
+
+/* ---- Header ---- */
+.page-header{
+  border-bottom: 4px solid #333;
+  padding: 14px 10px;
+  margin-bottom: 18px;
+
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+}
+
+/* h1 기본(헤더용) */
+h1{
+  color: rgb(40, 103, 128);
+  font-size: 2rem;
+  margin: 0;
+  text-align: center;
+}
+
+/* ---- Container (예약 현황 카드) ---- */
+#container {
+  margin: 18px auto 0;
+  max-width: 720px;
+  max-height: 420px;     /* 스크롤 유지 */
+  overflow-y: auto;
+
+  border: 1px solid #d7dde2;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+  scrollbar-gutter: stable;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+/* =========================
+   Table (예약 현황표)
+========================= */
+
+#scheduleTable{
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  table-layout: fixed;      /* 열 폭 안정화 */
+  background: #ffffff;
+  text-align: center;
+}
+
+#scheduleTable tr{
+  height: 48px;             /* 행 높이 통일 */
+}
+
+#scheduleTable th,
+#scheduleTable td{
+  padding: 12px 20px;
+  border-bottom: 1px solid #e6e6e6;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 헤더 고정 */
+#scheduleTable thead th{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  background: #e8f3f7;
+  color: #1b4b59;
+  font-weight: 800;
+  border-bottom: 2px solid #9bbec8;
+}
+
+/* 줄무늬 + hover */
+#scheduleTable tbody tr:nth-child(even){
+  background: #fafafa;
+}
+#scheduleTable tbody tr:hover{
+  background: #eef7ff;
+}
+
+/* 열 폭 비율: 시간 35%, 상태 65% */
+#scheduleTable th:first-child,
+#scheduleTable td:first-child{
+  width: 140px;
+  text-align: center;
+  letter-spacing: 0.7x;
+  font-variant-numeric: tabular-nums;
+  border-right: 2px solid #c7dbe3;
+}
+
+#scheduleTable th:nth-child(2),
+#scheduleTable td:nth-child(2){
+  width: auto;
+  text-align: center;
+}
+
+/* 상태 표시(셀 안에서 가운데에 차게) */
+.reserved,
+.available{
+    width: 80%; /* 너무 꽉 차지 않게 80~90% 유지 */
+    max-width: 200px; /* 너무 길어지지 않게 최대치 제한 */
+    margin: 0 auto;
+}
+
+.reserved{
+  background-color: #ffe0e0;
+  border: 1px solid #ff9b9b;
+}
+
+.available{
+  background-color: #f0f0f0;
+  color: #000000ff;
+  border: 1px solid #cfcfcf;
+}
+
+/* =========================
+   Footer (예약하기 카드)
+========================= */
+footer{
+  border-top: 4px solid #333;
+  padding: 14px 12px;
+  margin: 18px auto 0;
+  max-width: 720px;
+
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+}
+
+footer h1{
+  text-align: left;
+  font-size: 1.6rem;
+  margin: 0 0 12px;
+}
+
+/* ---- Form ---- */
 input{
-    padding: 4px 6px;
-    margin: 10px 0;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+input:focus{
+    border-color: #4A90E2; /* 포커스 시 포인트 컬러 */
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 label{
-    display: inline-block;
-    width: 80px;
-    text-align: center;
-    font-weight: bold;
-    margin-right: 10px;
-    padding: 3px;
-    background-color: rgb(180, 217, 209);
-    border: 1px solid #000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-right: 12px;
+    padding: 6px 10px;
+    
+    /* 딱딱한 검정 테두리 제거 */
+    background-color: #f1f5f9; /* 연한 블루그레이 */
+    color: #475569;            /* 차분한 글자색 */
+    border: 1px solid #e2e8f0; 
+    border-radius: 8px;        /* 굴곡을 더 부드럽게 */
 }
-.page-header{
-    border-bottom: 4px solid #333;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+
+#reservationForm{
+  text-align: left;
 }
-.reserved { 
-    background-color: #ffe0e0;
-    font-size: 2rem;
+
+#name{
+  width: min(320px, 100%);
 }
-.available { 
-    background-color: #f0f0f0; 
-    color: #000000ff;
-    font-size: 2rem;
-}
-#container {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 600px;
-    max-height: 400px;     
-    overflow-y: auto;  
-    border: 1px solid #ccc;
-    margin-top: 10px;
-    text-align: center;
-}
-footer{
-    border-top: 4px solid #333;
-    padding: 10px;
-    margin: 20px;
-}
-#scheduleTable {
-    width: 100%;
-    text-align: center;
-}
+
+/* ---- Time selection container ---- */
 #timeSelectionContainer {
-    width: 50%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  width: 100%;
+  max-width: 520px;
+  margin-top: 10px;
+  margin-bottom: 18px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background: #fbfdff;
 }
+
+/* 버튼 그룹 배치(버튼 스타일은 그대로) */
 #hourButtons, #minuteButtons {
-    display: flex; 
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
 }
+
+/* ---- Buttons (원본 유지) ---- */
 .time-button {
-    margin: 5px;
-    padding: 8px 12px;
-    border: 1px solid #007bff;
-    background-color: #fff;
-    color: #007bff;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s, color 0.2s;
+  margin: 5px;
+  padding: 8px 12px;
+  border: 1px solid #007bff;
+  background-color: #fff;
+  color: #007bff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
 }
+
 .time-button.selected {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-    border-color: #0056b3;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-color: #0056b3;
 }
-#displayTime {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #333;
-}
-.hidden {
-    display: none !important;
-}
+
 #toggleHourButton, #toggleMinuteButton {
-    padding: 8px 12px;
-    border: 1px solid #1DA2BD; /* 다른 요소와 구별되는 색상 */
-    background-color: #fff;
-    color: #1DA2BD;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.2s, color 0.2s;
-    margin-right: 5px;
+  padding: 8px 12px;
+  border: 1px solid #1DA2BD;
+  background-color: #fff;
+  color: #1DA2BD;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+  margin-right: 5px;
 }
+
+/* ---- Display time ---- */
+#displayTime {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+/* ---- Utility ---- */
+.hidden {
+  display: none !important;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px){
+  body{ padding: 18px 12px; }
+  #container, footer{ max-width: 100%; }
+  label{ width: 72px; }
+}
+

@@ -32,15 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("이미 예약된 시간입니다.");
             return;
         }
-        reservations={};
-        //resrvations에 추가
-        fetch("http://localhost:8080/api/items")
-            .then(res=> res.json())
-            .then(data=>{
-            data.forEach(item => {
-                reservations[item.time]=item.name;
-            })
-            })
+        // reservations={};
+        // //resrvations에 추가
+        // fetch("http://localhost:8080/api/items")
+        //     .then(res=> res.json())
+        //     .then(data=>{
+        //     data.forEach(item => {
+        //         reservations[item.time]=item.name;
+        //     })
+        //     })
+        reservations[time]=name
         renderSchedule(); // 추가한 기반으로 다시 테이블 생성
         form.reset();
     });
@@ -171,40 +172,40 @@ document.addEventListener("DOMContentLoaded", () => {
         return { updateTimeInput };
     }
 
-    function setupReservationDataAndSubmit() {
+    // function setupReservationDataAndSubmit() {
         
-        reservations = {};
-        renderSchedule();
+    //     reservations = {};
+    //     renderSchedule();
 
-        // submit을 제출한 경우 (리다이렉트/페이지 제출을 위해 e.preventDefault()는 실패 시에만 사용)
-        form.addEventListener('submit', function (e) {
+    //     // submit을 제출한 경우 (리다이렉트/페이지 제출을 위해 e.preventDefault()는 실패 시에만 사용)
+    //     form.addEventListener('submit', function (e) {
             
-            // 받은 time 쓰기 쉬운 상태로 바꾸기
-            const time = timeInput.value.substring(0, 5);
+    //         // 받은 time 쓰기 쉬운 상태로 바꾸기
+    //         const time = timeInput.value.substring(0, 5);
 
-            if (!form.checkValidity()) {
-                 // timeInput에 설정된 CustomValidity를 통해 시간 선택 여부 확인
-                 e.preventDefault(); 
-                 alert("예약 시간(시, 분)을 모두 선택/입력해 주세요.");
-                 return;
-            }
+    //         if (!form.checkValidity()) {
+    //              // timeInput에 설정된 CustomValidity를 통해 시간 선택 여부 확인
+    //              e.preventDefault(); 
+    //              alert("예약 시간(시, 분)을 모두 선택/입력해 주세요.");
+    //              return;
+    //         }
 
-            if (!timeSlots.includes(time)) {
-                e.preventDefault();
-                alert("예약 가능한 시간이 아닙니다.");
-                return;
-            }
+    //         if (!timeSlots.includes(time)) {
+    //             e.preventDefault();
+    //             alert("예약 가능한 시간이 아닙니다.");
+    //             return;
+    //         }
 
-            if (reservations[time]) { 
-                e.preventDefault();
-                alert("이미 예약된 시간입니다.");
-                return;
-            }
+    //         if (reservations[time]) { 
+    //             e.preventDefault();
+    //             alert("이미 예약된 시간입니다.");
+    //             return;
+    //         }
             
-            // 폼 제출 허용 (e.preventDefault()를 호출하지 않음)
-            // 서버는 이제 POST 요청을 받고, 예약 처리 후 리다이렉트를 수행해야 합니다.
-        });
-    }
+    //         // 폼 제출 허용 (e.preventDefault()를 호출하지 않음)
+    //         // 서버는 이제 POST 요청을 받고, 예약 처리 후 리다이렉트를 수행해야 합니다.
+    //     });
+    // }
     
     initializeUIAndListeners();
     setupReservationDataAndSubmit();
