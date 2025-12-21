@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface TimeRepository {
     ReservationTime save(ReservationTime reservationTime);
-    Optional<ReservationTime> findByTime(String time);
+    Optional<ReservationTime> findByTime(String date, String time);
+    List<ReservationTime> findByDate(String time);
     List<ReservationTime> findAll();
 }
