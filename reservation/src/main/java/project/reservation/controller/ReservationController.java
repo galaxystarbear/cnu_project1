@@ -26,16 +26,22 @@ public class ReservationController {
 
     @PostMapping("/main")
     public String mainPage(UserDto userDto, Model model) {
-//        if (memberService.login(userDto.getUserid(), userDto.getPass())){
+        if (memberService.login(userDto.getUserid(), userDto.getPass())){
             model.addAttribute("userid", userDto.getUserid());
             return "main";
-//        }
+        }
+        return "login";
     }
     
-    @GetMapping("/change")
-    public String passChange(NewUserDto newUserDto) {
-        memberService.changePassword(newUserDto.getUserid(), newUserDto.getPass(), newUserDto.getNewPass());
-        return "login";
+//    @GetMapping("/pw_change")
+//    public String passChange(NewUserDto newUserDto) {
+//        memberService.changePassword(newUserDto.getUserid(), newUserDto.getPass(), newUserDto.getNewPass());
+//        return "pw_change";
+//    }
+    @GetMapping("/pw_change")
+    public String passChange() {
+        
+        return "pw_change";
     }
     @PostMapping("/booking")
     public String getReservation(ReservationRequest reservationRequest, Model model) {

@@ -1,13 +1,14 @@
 package project.reservation.service;
 
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.reservation.domain.Member;
 import project.reservation.repository.MemberRepository;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
