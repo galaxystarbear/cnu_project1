@@ -23,11 +23,30 @@
             <input type="password" placeholder=" 비밀번호" id="pw" name="pass" required><br>
             <button name="로그인">로그인</button>
         </form>
-        <p>
-            <form action="/pw_change_popup.html" method="post">
-                <button name="비밀번호 변경">비밀번호 변경</button>
-            </form>
-        </p>
+        <div class="password-change-area">
+            <button type="button" name="비밀번호 변경" onclick="openPwChangePopup()">
+                비밀번호 변경
+            </button>
+        </div>
+        
+        <script>
+            function openPwChangePopup() {
+                // 창의 너비와 높이 설정
+                const width = 450;
+                const height = 400;
+        
+                // 화면 중앙에 팝업을 띄우기 위한 좌표 계산
+                const left = (window.screen.width / 2) - (width / 2);
+                const top = (window.screen.height / 2) - (height / 2);
+        
+                // window.open('파일명', '창이름', '옵션')
+                window.open(
+                    'pw_change_popup.html', 
+                    'pwChangeWindow', 
+                    `width=${width}, height=${height}, left=${left}, top=${top}, resizable=no, scrollbars=yes`
+                );
+            }
+        </script>
 
     </main>
 
