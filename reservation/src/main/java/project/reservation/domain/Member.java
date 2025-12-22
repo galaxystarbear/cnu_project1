@@ -1,10 +1,17 @@
 package project.reservation.domain;
 
-public class Member {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class Member {
+    
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String encodedPass;
+    private String pass;
 
     public long getId() {
         return id;
@@ -22,11 +29,11 @@ public class Member {
         this.name = name;
     }
     
-    public String getEncodedPass() {
-        return encodedPass;
+    public String getPass() {
+        return pass;
     }
     
-    public void setEncodedPass(String encodedPass) {
-        this.encodedPass = encodedPass;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }

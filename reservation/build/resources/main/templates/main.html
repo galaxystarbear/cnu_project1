@@ -3,43 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>예약페이지</title>
     <link rel="stylesheet" href="/CSS/main.css">
 </head>
+
 <body>
-    <header class="page-header">
-        <h1 th:text="${userid}+ '님'"></h1>
-    </header>
-    <main>
-        <div id="container">
-            <h2>예약 현황표</h2>
-            <table id="scheduleTable">
-                <thead>
-                    <tr><th>시간</th><th>상태</th></tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+
+<header class="page-header">
+    <h1 th:text="${userid}+ '님'"></h1>
+</header>
+
+<main>
+    <div id="container">
+        <h2>예약 현황표</h2>
+        <table id="scheduleTable">
+            <thead>
+            <tr><th>시간</th><th>상태</th></tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer>
+    <h1>예약하기</h1>
+    <form id="reservationForm" action="/booking" method="post">
+        <label for="time">예약 시간:</label>
+        <input type="hidden" id="time" name="time" required>
+        <div id="timeSelectionContainer">
+            <button type="button" id="toggleHourButton">시</button>
+            <button type="button" id="toggleMinuteButton" disabled>분</button>
+            <div id="hourButtons" class="time-buttons-group"></div>
+            <div id="minuteButtons" class="time-buttons-group hidden"></div>
+            <div id="displayTime">선택된 시간: --:--</div>
         </div>
-    </main>
-    <footer>
-        <h1>예약하기</h1>
-            <form id="reservationForm" action="booking" method="post">
-                <label for="reservationTime">예약 시간:</label>
-                <input type="hidden" id="reservationTime" name="reservationTime" required>
-                <div id="timeSelectionContainer"> 
-                    <button type="button" id="toggleHourButton">시</button> 
-                    <button type="button" id="toggleMinuteButton" disabled>분</button> 
-                    <div id="hourButtons" class="reservationTime-buttons-group"></div>
-                    <div id="minuteButtons" class="reservationTime-buttons-group hidden"></div>
-                    <div id="displayTime">선택된 시간: --:--</div>
-                </div>
-                <label for="name">이름:</label>
-                <input type="text" id="name" required>
-                <button type="submit">예약</button>
-            </form>
-            <script src="app.js"></script>
-    </footer>
-    
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">예약</button>
+    </form>
+    <script src="app.js"></script>
+</footer>
+
 </body>
 </html>
