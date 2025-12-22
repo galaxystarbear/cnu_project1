@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     getItem();
 
+
+    console.log(today);
     function getItem(){
         fetch(url, {
             headers: {
@@ -36,11 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then((data) => {
                 data.forEach((item) => {
-                    const name=item.id.toString();
-                    console.log("time =", item.time);
-                    reservations[item.time]=name;
-                    renderSchedule();
-                    console.log(reservations);
+                    const now = new Date();
+                    const today =
+                      `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+                    
+                    console.log(item.date===today);
+                    if(item.date===today){
+                        const name=item.name;
+                        console.log("time =", item.time);
+                        reservations[item.time]=name;
+                        renderSchedule();
+                        console.log(reservations);
+                    }
+                    
                 });
                 renderSchedule();
             })
