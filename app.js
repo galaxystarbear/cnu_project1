@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = "https://owahjinzifqtnoutjpwa.supabase.co/rest/v1/reservation_time?select=*";
 
     getItem();
-
+    initializeUIAndListeners()
 
     console.log(today);
     function getItem(){
