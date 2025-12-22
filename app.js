@@ -32,19 +32,32 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("이미 예약된 시간입니다.");
             return;
         }
-        // reservations={};
-        // //resrvations에 추가
-        // fetch("http://localhost:8080/api/items")
-        //     .then(res=> res.json())
-        //     .then(data=>{
-        //     data.forEach(item => {
-        //         reservations[item.time]=item.name;
-        //     })
-        //     })
-        reservations[time]=name
-        renderSchedule(); // 추가한 기반으로 다시 테이블 생성
-        form.reset();
+        const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YWhqaW56aWZxdG5vdXRqcHdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMDk4ODAsImV4cCI6MjA4MTg4NTg4MH0.ZJnL0SnOKCRiRwsg46lqTM1POcZecv_43Eraq4dbXHE";
+        const url = "https://owahjinzifqtnoutjpwa.supabase.co/rest/v1/reservation_time?select=*";
+
+        fetch("https://owahjinzifqtnoutjpwa.supabase.co/rest/v1/reservation_time?select=*", {
+        headers: {
+            apikey: API_KEY,
+            Authorization: `Bearer ${API_KEY}`,
+        },
+        })
+        .then(async (res) => {
+            console.log("status =", res.status);
+            const text = await res.text();
+            console.log("raw =", text); // ✅ 여기서 [] 인지, 데이터가 있는지 바로 보임
+            return JSON.parse(text);
+        })
+        .then((data) => {
+            data.forEach((item) => {
+                console.log("item =", item)
+                reservations[item.time]=item.id;
+            });
+        })
+        .catch(console.error);
+
+
     });
+    //넣는 구조랑 받았을 때 넣을수 있는 구조로 바꾸기
 
     function generateTimeSlots(start, end, intervalMinutes) {
         const slots = [];
@@ -208,5 +221,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // }
     
     initializeUIAndListeners();
-    setupReservationDataAndSubmit();
 });
