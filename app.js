@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         getItem();
+        form.reset();
 
 
     });
