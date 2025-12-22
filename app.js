@@ -15,13 +15,46 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedMinute = null;
     let reservations = {}; // 시간 → 이름
     const timeSlots = generateTimeSlots("00:00", "24:00", 30);
-    renderSchedule();
+
+    const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YWhqaW56aWZxdG5vdXRqcHdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMDk4ODAsImV4cCI6MjA4MTg4NTg4MH0.ZJnL0SnOKCRiRwsg46lqTM1POcZecv_43Eraq4dbXHE";
+    const url = "https://owahjinzifqtnoutjpwa.supabase.co/rest/v1/reservation_time?select=*";
+
+    getItem();
+
+    function getItem(){
+        fetch(url, {
+            headers: {
+                apikey: API_KEY,
+                Authorization: `Bearer ${API_KEY}`,
+            },
+            })
+            .then(async (res) => {
+                console.log("status =", res.status);
+                const text = await res.text();
+                console.log("raw =", text); // ✅ 여기서 [] 인지, 데이터가 있는지 바로 보임
+                return JSON.parse(text);
+            })
+            .then((data) => {
+                data.forEach((item) => {
+                    const name=item.id.toString();
+                    console.log("time =", item.time);
+                    reservations[item.time]=name;
+                    renderSchedule();
+                    console.log(reservations);
+                });
+                renderSchedule();
+            })
+            
+            .catch(console.error);
+    }
+
     form.addEventListener('submit', function (e) {
         e.preventDefault();//submit의 특징인 새로고침 막기
 
         //받은 time, name 쓰기 쉬운 상태로 바꾸기
         const time = timeInput.value.substring(0,5);
         const name = nameInput.value;
+        console.log(timeInput);
 
         if (!timeSlots.includes(time)) {
             alert("예약 가능한 시간이 아닙니다.");
@@ -32,28 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("이미 예약된 시간입니다.");
             return;
         }
-        const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im93YWhqaW56aWZxdG5vdXRqcHdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYzMDk4ODAsImV4cCI6MjA4MTg4NTg4MH0.ZJnL0SnOKCRiRwsg46lqTM1POcZecv_43Eraq4dbXHE";
-        const url = "https://owahjinzifqtnoutjpwa.supabase.co/rest/v1/reservation_time?select=*";
 
-        fetch("https://owahjinzifqtnoutjpwa.supabase.co/rest/v1/reservation_time?select=*", {
-        headers: {
-            apikey: API_KEY,
-            Authorization: `Bearer ${API_KEY}`,
-        },
-        })
-        .then(async (res) => {
-            console.log("status =", res.status);
-            const text = await res.text();
-            console.log("raw =", text); // ✅ 여기서 [] 인지, 데이터가 있는지 바로 보임
-            return JSON.parse(text);
-        })
-        .then((data) => {
-            data.forEach((item) => {
-                console.log("item =", item)
-                reservations[item.time]=item.id;
-            });
-        })
-        .catch(console.error);
+
+        getItem();
 
 
     });
