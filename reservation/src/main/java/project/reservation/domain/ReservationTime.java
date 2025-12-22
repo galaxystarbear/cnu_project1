@@ -10,6 +10,7 @@ public class ReservationTime {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private String date;
     private String time;
 
@@ -34,5 +35,13 @@ public class ReservationTime {
 
     public void setTime(String time) {
         this.time = time;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -3,6 +3,7 @@ package project.reservation.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import project.reservation.domain.ReservationRequest;
 import project.reservation.domain.ReservationTime;
 import project.reservation.service.TimeService;
 
@@ -32,11 +33,6 @@ public class ReservationRestController{
         return "dumi3";
     }
     
-    @GetMapping("/booking")
-    public List<ReservationTime> getReservation(ReservationTime reservationTime) {
-        timeService.enroll(reservationTime);
-        List<ReservationTime> timeList = timeService.findTimes();
-        return timeList;
-    }
+    
     
 }

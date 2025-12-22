@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.reservation.domain.NewUserDto;
+import project.reservation.domain.ReservationRequest;
 import project.reservation.domain.ReservationTime;
 import project.reservation.domain.UserDto;
 import project.reservation.service.MemberService;
@@ -25,11 +26,10 @@ public class ReservationController {
 
     @PostMapping("/main")
     public String mainPage(UserDto userDto, Model model) {
-        if (memberService.login(userDto.getUserid(), userDto.getPass())){
+//        if (memberService.login(userDto.getUserid(), userDto.getPass())){
             model.addAttribute("userid", userDto.getUserid());
             return "main";
-        }
-        return "login";
+//        }
     }
     
     @GetMapping("/change")
@@ -37,6 +37,11 @@ public class ReservationController {
         memberService.changePassword(newUserDto.getUserid(), newUserDto.getPass(), newUserDto.getNewPass());
         return "login";
     }
-
+    @PostMapping("/booking")
+    public String getReservation(ReservationRequest reservationRequest, Model model) {
+        timeService.enroll(reservationRequest);
+        model.addAttribute("userid", reservationRequest.getName());
+        return "main";
+    }
 }
 

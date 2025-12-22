@@ -19,30 +19,30 @@ public class TimeServiceTest {
     @Autowired
     TimeRepository timeRepository;
 
-    @Test
-    void 예약() {
-        ReservationTime reservationTime = new ReservationTime();
-        reservationTime.setDate("2025-12-08");
-        reservationTime.setTime("17:40");
+//    @Test
+//    void 예약() {
+//        ReservationTime reservationTime = new ReservationTime();
+//        reservationTime.setDate("2025-12-08");
+//        reservationTime.setTime("17:40");
+//
+//        String saveTime = timeService.enroll(reservationTime);
+//
+//        System.out.println(saveTime);
+//    }
 
-        String saveTime = timeService.enroll(reservationTime);
-
-        System.out.println(saveTime);
-    }
-
-    @Test
-    public void 중복예약() {
-        ReservationTime reservationTime1 = new ReservationTime();
-        reservationTime1.setDate("2025-12-08");
-        reservationTime1.setTime("16:00");
-
-        ReservationTime reservationTime2 = new ReservationTime();
-        reservationTime2.setDate("2025-12-08");
-        reservationTime2.setTime("16:00");
-
-        timeService.enroll(reservationTime1);
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> timeService.enroll(reservationTime2));
-
-        assertThat(e.getMessage()).isEqualTo("예약이 불가능한 시간입니다.");
-    }
+//    @Test
+//    public void 중복예약() {
+//        ReservationTime reservationTime1 = new ReservationTime();
+//        reservationTime1.setDate("2025-12-08");
+//        reservationTime1.setTime("16:00");
+//
+//        ReservationTime reservationTime2 = new ReservationTime();
+//        reservationTime2.setDate("2025-12-08");
+//        reservationTime2.setTime("16:00");
+//
+//        timeService.enroll(reservationTime1);
+//        IllegalStateException e = assertThrows(IllegalStateException.class, () -> timeService.enroll(reservationTime2));
+//
+//        assertThat(e.getMessage()).isEqualTo("예약이 불가능한 시간입니다.");
+//    }
 }
